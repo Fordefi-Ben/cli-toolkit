@@ -250,29 +250,6 @@ Sending request...
 | Ton | Jetton | Address (-0:...) |
 | Exchange | N/A | Symbol |
 
-## Team Distribution
-
-To distribute to your team:
-
-1. Share the project folder
-2. Have team members install using one of the methods above:
-
-   **macOS (recommended):**
-   ```bash
-   brew install pipx
-   pipx install /path/to/CS_Tool
-   cstool configure
-   ```
-
-   **Virtual environment:**
-   ```bash
-   cd CS_Tool
-   python3 -m venv venv
-   source venv/bin/activate
-   pip install -e .
-   cstool configure
-   ```
-
 ## Troubleshooting
 
 ### 401 Unauthorized
