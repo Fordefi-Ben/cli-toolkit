@@ -155,13 +155,13 @@ Display grouped results with session headers
 ## API Endpoints
 
 ### Asset Creation
-- **URL**: `{base_url}/api/v1/assets/asset-infos`
+- **URL**: `https://api.fordefi.com/api/v1/assets/asset-infos`
 - **Method**: POST
 - **Auth**: `Authorization: Bearer {api_key}` (from config)
 - **Timeout**: 30s
 
-### Vault Refresh  
-- **URL**: `{base_url}/api/v1/assets/refresh-owned-assets`
+### Vault Refresh
+- **URL**: `https://api.fordefi.com/api/v1/assets/refresh-owned-assets`
 - **Method**: POST
 - **Auth**: `Authorization: Bearer {ephemeral_token}` (user-provided each time)
 - **Timeout**: 30s

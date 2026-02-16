@@ -71,9 +71,7 @@ Before using the tool, configure your API key:
 cstool configure
 ```
 
-You will be prompted to enter:
-- **API Key**: Your Fordefi API key (must be a TRADER key, not a viewer key)
-- **API Base URL**: The Fordefi API base URL (default: https://api.fordefi.com)
+You will be prompted to enter your Fordefi API key (must be a TRADER key, not a viewer key).
 
 Configuration is stored in `~/.cs_tools/config.yaml` with secure permissions (0600).
 
@@ -143,86 +141,17 @@ cstool refresh-vault -t "your-ephemeral-token" -v vault-id-1 -v vault-id-2
 cstool refresh-vault -t "your-ephemeral-token" -v vault-id -a asset-id -o org-id
 ```
 
-## Mobile Logs Analysis
+## Mobile Logs Analysis (Experimental)
 
-Analyze Fordefi mobile app diagnostic logs:
+> **Note:** The mobile logs commands are a work-in-progress internal tool for the mobile team and may not be useful for most users.
 
-```bash
-# Quick summary (device info, app version, error count)
-cstool logs-summary logs.zip
-
-# View sessions containing errors (shows full session context)
-cstool logs-errors logs.zip
-cstool logs-errors logs.zip --redact       # redact sensitive data
-cstool logs-errors logs.zip --gap 60       # 1-minute session threshold
-cstool logs-errors logs.zip -n 5           # limit to 5 sessions
-
-# Search logs (grouped by session)
-cstool logs-search logs.zip "token"        # text search
-cstool logs-search logs.zip -m AuthBloc    # by module
-cstool logs-search logs.zip -l error       # by level
-
-# Export logs (auto-names based on source: logs.zip → logs.json)
-cstool logs-export logs.zip                    # exports to logs.json
-cstool logs-export logs.zip -f text            # exports to logs.txt  
-cstool logs-export logs.zip -o custom.json     # custom filename
-cstool logs-export logs.zip -l error --redact  # filtered + redacted
-```
-
-The `--redact` flag sanitizes sensitive data (emails, UUIDs, tokens) before output.
-
-### Flexible Date/Time Filtering
-
-The `logs-search` and `logs-export` commands support flexible date/time formats for the `--after` and `--before` options:
-
-| Format | Example | Description |
-|--------|---------|-------------|
-| ISO date | `2026-01-15` | Full date |
-| ISO datetime | `2026-01-15 10:30` | Date with time |
-| Month-day | `01-15` or `1/15` | Assumes current year |
-| Named month | `jan 15` or `january 15` | Assumes current year |
-| With time | `jan 15 10pm` | Named month with time |
+These commands parse and analyze Fordefi mobile app diagnostic log bundles (zip files). Run any command with `--help` for full options.
 
 ```bash
-# Filter by date range
-cstool logs-search logs.zip -a "jan 15" -b "jan 16"
-
-# Filter by specific time window
-cstool logs-search logs.zip -a "jan 15 10am" -b "jan 15 2pm"
-
-# Export a specific day
-cstool logs-export logs.zip -o jan15.txt -a "01-15" -b "01-16"
-```
-
-### Session Grouping
-
-Log entries are automatically grouped into "sessions" based on time gaps between consecutive entries. By default, a new session starts when there's a gap of more than 5 minutes (300 seconds) between entries.
-
-This makes it easier to identify distinct user activity periods in the logs:
-
-```
-━━━ Session 1 • Jan 15, 11:06 AM (23 entries, 3.1s) ━━━━━━━━━━━━━━━━━━━━━
-
-⛔ 11:06:36.168 [generateRoute] ...
-💡 11:06:36.175 [VaultSigner] ...
-
-━━━ Session 2 • Jan 15, 11:45 AM (8 entries, 1.2s) ━━━━━━━━━━━━━━━━━━━━━━
-
-⛔ 11:45:22.001 [AuthBloc] ...
-```
-
-**Session grouping options:**
-
-```bash
-# Disable session grouping
-cstool logs-search logs.zip --no-group
-
-# Custom gap threshold (e.g., 60 seconds)
-cstool logs-search logs.zip --gap 60
-
-# Works with errors and export too
-cstool logs-export logs.zip --gap 120
-cstool logs-export logs.zip                      # JSON includes session metadata
+cstool logs-summary logs.zip          # Quick stats (device, OS, app version, errors)
+cstool logs-errors logs.zip           # Show sessions containing errors
+cstool logs-search logs.zip "token"   # Search/filter log entries
+cstool logs-export logs.zip           # Export to JSON
 ```
 
 ## Example Workflows
@@ -304,32 +233,6 @@ Refreshing with payload:
 Sending request...
 
 ✅ Refresh triggered successfully!
-```
-
-### Analyze Mobile Logs
-
-```
-$ cstool logs-errors logs.zip
-
-⛔ Found 3 error(s) in 2 session(s)
-
-━━━ Session 1 • Jan 14, 8:35 AM (47 entries, 12.3s, 2 errors) ━━━━━━━━━━
-
-💡 08:35:17.505 [GoSDK] nativePort 1234572493260759 postCObject 4373816240
-💡 08:35:17.520 INITIALIZE APPLICATION Version: v1.100.0.8...
-💡 08:35:17.535 Fetching user record
-⛔ 08:35:17.773 [generateRoute] generateRoute [name / , args: {approvalId: null...
-💡 08:35:17.831 [VaultSigner] All Entries In Vault Keychain:
-...
-⛔ 08:35:29.445 [SyncBloc] can't sync - auth state=AuthPhase.processing...
-
-━━━ Session 2 • Jan 15, 11:06 AM (23 entries, 3.2s, 1 error) ━━━━━━━━━━━
-
-💡 11:06:33.048 Loaded 17 invite records into memory
-💡 11:06:33.049 [KeysStorage] Init SecureStorageImpl
-...
-⛔ 11:06:36.168 [generateRoute] generateRoute [name / , args: {approvalId: null...
-💡 11:06:36.175 [VaultSigner] All Entries In Vault Keychain:
 ```
 
 ## Supported Blockchains

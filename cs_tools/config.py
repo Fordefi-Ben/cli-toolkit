@@ -9,7 +9,7 @@ import yaml
 
 CONFIG_DIR = Path.home() / ".cs_tools"
 CONFIG_FILE = CONFIG_DIR / "config.yaml"
-DEFAULT_API_BASE_URL = "https://api.fordefi.com"
+API_BASE_URL = "https://api.fordefi.com"
 ENV_API_KEY = "CS_TOOLS_API_KEY"
 
 
@@ -54,9 +54,8 @@ def get_api_key() -> Optional[str]:
 
 
 def get_api_base_url() -> str:
-    """Get API base URL from config file or return default."""
-    config = load_config()
-    return config.get("api_base_url", DEFAULT_API_BASE_URL)
+    """Get the Fordefi API base URL."""
+    return API_BASE_URL
 
 
 def is_configured() -> bool:

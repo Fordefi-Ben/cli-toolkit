@@ -5,7 +5,6 @@ import click
 from ..config import (
     load_config,
     save_config,
-    DEFAULT_API_BASE_URL,
     CONFIG_FILE,
 )
 
@@ -46,17 +45,9 @@ def configure():
     elif not api_key:
         click.echo(click.style("Warning: No API key provided.", fg="yellow"))
     
-    # Prompt for API base URL
-    existing_url = existing_config.get("api_base_url", DEFAULT_API_BASE_URL)
-    api_base_url = click.prompt(
-        "Enter the API base URL",
-        default=existing_url,
-    )
-    
     # Save configuration
     config = {
         "api_key": api_key,
-        "api_base_url": api_base_url,
     }
     
     save_config(config)

@@ -36,7 +36,7 @@ CS_Tool/
 ## Existing Commands
 
 ### `cstool configure`
-Sets up API key and base URL. Stores config in `~/.cs_tools/config.yaml`.
+Sets up API key. Stores config in `~/.cs_tools/config.yaml`.
 
 ### `cstool assets create` (alias: `cstool create-asset`)
 Interactive asset creation for various blockchains. Uses the stored API key.
@@ -142,7 +142,7 @@ Create a new file in `cs_tools/commands/`. For example, `cs_tools/commands/trans
 
 import click
 
-from ..config import is_configured, get_api_key, get_api_base_url
+from ..config import is_configured, get_api_key
 
 
 @click.group()

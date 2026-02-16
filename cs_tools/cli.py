@@ -35,8 +35,8 @@ def cli():
         cstool refresh-vault
         cstool vaults refresh  (also works)
     
-    Analyze mobile logs with:
-    
+    Analyze mobile logs (experimental):
+
         cstool logs-summary logs.zip
         cstool logs-errors logs.zip
     """
