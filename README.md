@@ -7,7 +7,7 @@ A command-line interface tool for interacting with the Fordefi API.
 First, clone the repository:
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Fordefi-Ben/cli-toolkit.git
 cd CS_Tool
 ```
 
