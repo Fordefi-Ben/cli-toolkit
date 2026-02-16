@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cs-tools"
+version = "0.1.0"
+description = "CLI tool for interacting with the Fordefi API"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "click>=8.1.0",
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+    "python-dateutil>=2.8.0",
+]
+
+[project.scripts]
+cstool = "cs_tools.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cs_tools*", "mobile_logs*"]
