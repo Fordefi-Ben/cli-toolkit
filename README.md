@@ -164,7 +164,7 @@ Select blockchain:
   1) EVM
   ...
 > 1
-Enter network (e.g., evm_1, evm_137): evm_1
+Enter chain ID (e.g., 1, 137): 1
 Enter token address (hex): 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
 Creating asset...
 ✅ Asset created successfully!

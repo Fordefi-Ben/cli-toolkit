@@ -179,9 +179,10 @@ def get_chain_for_blockchain(blockchain: str) -> str:
     if blockchain in NETWORKS:
         return select_from_list(NETWORKS[blockchain], "Select network")
     
-    # EVM is freeform input
+    # EVM is freeform input — user enters numeric chain ID, we prepend evm_
     if blockchain == "evm":
-        return click.prompt("Enter network (e.g., evm_1, evm_137)")
+        chain_id = click.prompt("Enter chain ID (e.g., 1, 137)")
+        return f"evm_{chain_id.strip()}"
     
     # Default fallback (shouldn't reach here)
     return click.prompt("Enter network")
